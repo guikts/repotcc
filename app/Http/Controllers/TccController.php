@@ -23,7 +23,7 @@ class TccController extends Controller
     {
         $dados = $request->all();
         if($request->hasFile('arquivo_pdf') && $request->file('arquivo_pdf')->isValid()){
-            $cda = $request->file('arquivo_pdf')->store('tccs', 'public');
+            $cda = $request->file('arquivo_pdf')->store('pdf', 'public');
             $dados['arquivo_pdf'] = $cda;
         } 
         \App\Models\Tcc::create($dados);
