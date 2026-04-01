@@ -4,7 +4,12 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class banca extends Model
+class Banca extends Model
 {
-    //
+    protected $fillable = ['nome', 'tcc_id'];
+
+    public function tcc()
+    {
+        return $this->belongsTo(Tcc::class);
+    }
 }
