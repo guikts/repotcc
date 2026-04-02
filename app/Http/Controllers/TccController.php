@@ -8,59 +8,60 @@ use App\Http\Requests\UpdatetccRequest;
 
 class TccController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
     public function index()
     {
-        //
+        $tccs = \App\Models\Tcc::all();
+        return view('tccs.index', compact('tccs'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
     public function create()
     {
-        //
+        return view('tccs.create');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(StoretccRequest $request)
     {
-        //
+        $dados = $request->all();
+        if($request->hasFile('arquivo_pdf') && $request->file('arquivo_pdf')->isValid()){
+            $cda = $request->file('arquivo_pdf')->store('tccs', 'public');
+            $dados['arquivo_pdf'] = $cda;
+        } 
+        \App\Models\Tcc::create($dados);
+        
+        return redirect()->route('tccs.index');
     }
 
-    /**
-     * Display the specified resource.
-     */
     public function show(tcc $tcc)
     {
-        //
+        return view('tccs.show', compact('tcc'));
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
     public function edit(tcc $tcc)
     {
-        //
+        return view('tccs.edit', compact('tcc'));
     }
-
-    /**
-     * Update the specified resource in storage.
-     */
     public function update(UpdatetccRequest $request, tcc $tcc)
     {
-        //
+        $dados = $request->all();
+        if($request->hasFile('arquivo_pdf') && $request->file('arquivo_pdf')->isValid()){
+            $cda = $request->file('arquivo_pdf')->store('tccs', 'public');
+            $dados['arquivo_pdf'] = $cda;
+        }else{
+            unset($dados['arquivo_pdf']);
+        }
+
+        $dados = array_filter($dados, function($value){
+            return !is_null($value) && $value !== '';
+        });
+
+        $tcc->update($dados);
+        return redirect()->route('tccs.index');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
+
     public function destroy(tcc $tcc)
     {
-        //
+        $tcc->delete();
+        return redirect()->route('tccs.index');
     }
 }

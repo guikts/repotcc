@@ -7,5 +7,6 @@ use App\Http\Controllers\BancaController;
 Route::get('/', function () {
     return view('welcome');
 });
-Route::resource('clientes', TccController::class);
-Route::resource('vendas', BancaController::class);
+
+Route::resource('tccs', TccController::class);
+Route::resource('bancas', BancaController::class);
