@@ -23,11 +23,8 @@ class TccController extends Controller
     {
         $dados = $request->all();
         if($request->hasFile('arquivo_pdf') && $request->file('arquivo_pdf')->isValid()){
-<<<<<<< HEAD
             $cda = $request->file('arquivo_pdf')->store('tccs', 'public');
-=======
             $cda = $request->file('arquivo_pdf')->store('pdf', 'public');
->>>>>>> e81999f21895f4ea224f330e90a2ce76ceae3103
             $dados['arquivo_pdf'] = $cda;
         } 
         \App\Models\Tcc::create($dados);
@@ -62,10 +59,6 @@ class TccController extends Controller
         return redirect()->route('tccs.index');
     }
 
-<<<<<<< HEAD
-
-=======
->>>>>>> e81999f21895f4ea224f330e90a2ce76ceae3103
     public function destroy(tcc $tcc)
     {
         $tcc->delete();
